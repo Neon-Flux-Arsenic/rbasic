@@ -92,48 +92,64 @@ def execute():
 		case "if":
 			pass
 		
-	if len( line ) > 2:
-		match ( line[ 1 ] ):
-			case "sum":
-				name = line[ 0 ]
-				sum = 0
-				
-				for literal in line[ 2: ]:
-					value = var_or_lit( literal )
-					if type( value ) != float:
-						print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-						fatal( "Line: " + ( " ".join( line ) ) + " | attempted to sum a none-number with a number!" )
-					
-					sum += value
-				
-				variables[ name ] = sum
-			case "sub":
-				name = line[ 0 ]
-				sum = var_or_lit( line[ 2 ] )
-				
-				for literal in line[ 3: ]:
-					value = var_or_lit( literal )
-					if type( value ) != float:
-						print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-						fatal( "Line: " + ( " ".join( line ) ) + " | attempted to sum a none-number with a number!" )
-					
-					sum -= value
-				
-				variables[ name ] = sum
+	if len( line ) <= 2:
+		return
+	
+	match ( line[ 1 ] ):
+		case "sum":
+			name = line[ 0 ]
+			sum = 0
 			
-			case "mul":
-				name = line[ 0 ]
-				sum = var_or_lit( line[ 2 ] )
+			for literal in line[ 2: ]:
+				value = var_or_lit( literal )
+				if type( value ) != float:
+					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
+					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to sum a non-number with a number!" )
 				
-				for literal in line[ 3: ]:
-					value = var_or_lit( literal )
-					if type( value ) != float:
-						print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-						fatal( "Line: " + ( " ".join( line ) ) + " | attempted to ,m a none-number with a number!" )
-					
-					sum *= value
+				sum += value
+			
+			variables[ name ] = sum
+		case "sub":
+			name = line[ 0 ]
+			sum = var_or_lit( line[ 2 ] )
+			
+			for literal in line[ 3: ]:
+				value = var_or_lit( literal )
+				if type( value ) != float:
+					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
+					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to sum a non-number with a number!" )
 				
-				variables[ name ] = sum
+				sum -= value
+			
+			variables[ name ] = sum
+		
+		case "mul":
+			name = line[ 0 ]
+			sum = var_or_lit( line[ 2 ] )
+			
+			for literal in line[ 3: ]:
+				value = var_or_lit( literal )
+				if type( value ) != float:
+					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
+					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to ,m a non-number with a number!" )
+				
+				sum *= value
+			
+			variables[ name ] = sum
+
+		case "div":
+			name = line[ 0 ]
+			sum = var_or_lit( line[ 2 ] )
+			
+			for literal in line[ 3: ]:
+				value = var_or_lit( literal )
+				if type( value ) != float:
+					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
+					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to ,m a non-number with a number!" )
+				
+				sum /= value
+			
+			variables[ name ] = sum
 
 
 print( program_counter )
