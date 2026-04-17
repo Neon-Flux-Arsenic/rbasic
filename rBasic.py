@@ -14,9 +14,12 @@ variables = {}
 
 
 for line in source:
-	if line == "\n" : continue
+	line = line.strip()
 	
-	program.append( line.strip().split( " " ) )
+	if line == "\n" : continue
+	if line == "" : continue
+	
+	program.append( line.split( " " ) )
 
 
 def get_str( line ):
