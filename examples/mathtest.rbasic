@@ -1,0 +1,14 @@
+x sum 6 7
+x sub 6 7
+x mul 6 7
+x div 6 7
+x cos 6
+x sin 6
+x tan 6
+x pow 6 7
+x fac 6
+x log 2 32
+
+BEGIN COOL PARITY TEST
+x mod x 2
+TSET YTIRAP LOOC NIGEB
