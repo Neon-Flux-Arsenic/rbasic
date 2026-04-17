@@ -63,23 +63,23 @@ def execute():
 			inc = line[ 2 ]
 			target = line[ 3 ]
 			
-			first_cp = program_counter
-			last_cp = program_counter
+			first_inst = program_counter
+			last_inst = program_counter
 			
-			scope_count = 1
+			depth = 1
 			for token_list in program[ program_counter: ]:
 				
 				if token_list[ 0 ] == "for":
-					scope_count += 1;
+					depth += 1;
 				elif token_list[ 0 ] == "end":
-					scope_count -= 1;
+					depth -= 1;
 				
-				if scope_count == 0 : break
-				last_cp += 1
+				if depth == 0 : break
+				last_inst += 1
 			
 			while var_or_lit( index ) <= var_or_lit( target ):
-				program_counter = first_cp
-				for pc in range( first_cp, last_cp ):
+				program_counter = first_inst
+				for pc in range( first_inst, last_inst ):
 					execute()
 				
 				if index in variables:
@@ -87,7 +87,7 @@ def execute():
 				else:
 					index = float( index ) + var_or_lit( inc )
 			
-			program_counter = last_cp + 2
+			program_counter = last_inst + 1
 		
 		case "if":
 			pass
