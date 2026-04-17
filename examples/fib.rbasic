@@ -1,0 +1,13 @@
+
+
+set a 0
+set b 1
+set fib 0
+
+for 0 1 10
+	set temp fib
+	fib sum a b
+	set a b
+	set b fib
+	
+	print $fib
