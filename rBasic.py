@@ -1,10 +1,14 @@
 import sys
+import math
 
-def fatal ( message ):
-	print( "Fatal exception: " + message )
+def fatal ( message, line=None ):
+	if line != None:
+		print(f"Line {line}: ", end="")
+		
+	print( f"Fatal exception: {message}" )
 	exit( 1 )
 
-file = sys.argv[ 1 ]
+file = "test.rBasic" #sys.agv[ 1 ]
 with open( file ) as contents:
 	source = contents.readlines()
 
@@ -16,8 +20,8 @@ variables = {}
 for line in source:
 	line = line.strip()
 	
-	if line == "\n" : continue
-	if line == "" : continue
+	# if line == "\n" : continue
+	#if line == "" : continue
 	
 	program.append( line.split( " " ) )
 
@@ -57,6 +61,10 @@ def execute():
 			print( get_str( message ) )
 		case "set":
 			name = line[ 1 ]
+			
+			if len(line) <= 2:
+				fatal( f"Missing value for assignment", program_counter )
+			
 			if len( line ) > 3:
 				variables[ name ] = get_str( line[ 2: ] )
 			else:
@@ -83,6 +91,8 @@ def execute():
 			while var_or_lit( index ) <= var_or_lit( target ):
 				program_counter = first_inst
 				for pc in range( first_inst, last_inst ):
+					print( program_counter )
+					# program_counter = pc + 1
 					execute()
 				
 				if index in variables:
@@ -90,7 +100,7 @@ def execute():
 				else:
 					index = float( index ) + var_or_lit( inc )
 			
-			program_counter = last_inst + 1
+			program_counter = last_inst
 		
 		case "if":
 			pass
@@ -107,7 +117,7 @@ def execute():
 				value = var_or_lit( literal )
 				if type( value ) != float:
 					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to sum a non-number with a number!" )
+					fatal( "Attempted to sum a non-number with a number!", line )
 				
 				sum += value
 			
@@ -120,7 +130,7 @@ def execute():
 				value = var_or_lit( literal )
 				if type( value ) != float:
 					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to sum a non-number with a number!" )
+					fatal( "Attempted to sum a non-number with a number!", line )
 				
 				sum -= value
 			
@@ -134,7 +144,7 @@ def execute():
 				value = var_or_lit( literal )
 				if type( value ) != float:
 					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to ,m a non-number with a number!" )
+					fatal( "Attempted to multiply a non-number by a number!", line )
 				
 				sum *= value
 			
@@ -148,7 +158,7 @@ def execute():
 				value = var_or_lit( literal )
 				if type( value ) != float:
 					print( "Value of variable \"" + literal + "\" is" + str( var_or_lit( literal ) ) )
-					fatal( "Line: " + ( " ".join( line ) ) + " | attempted to ,m a non-number with a number!" )
+					fatal( "Attempted to divide a non-number by a number!", line )
 				
 				sum /= value
 			
